@@ -18,7 +18,7 @@ namespace EmpiricalEstimation
             //Dictionary<String,List<string>> TrainDocs = new Dictionary<string,List<string>>();
             List<String> Vocab = new List<string>();
             Dictionary<String, Dictionary<string, double>> ClassFeatureTemp = new Dictionary<string, Dictionary<string, double>>();
-            Dictionary<String, Dictionary<string, double>> ClassFeature = new Dictionary<string, Dictionary<string, double>>();
+            Dictionary<String, Dictionary<string, double>> ObservedFeatureProb = new Dictionary<string, Dictionary<string, double>>();
             List<String> ClassList = new List<string>();
             string classLabel,key;
             int index,totalFeatures;
@@ -60,24 +60,24 @@ namespace EmpiricalEstimation
             totalFeatures = ClassList.Count * Vocab.Count;
             foreach (var cl in ClassList)
             {
-                ClassFeature.Add(cl, new Dictionary<string, double>());
+                ObservedFeatureProb.Add(cl, new Dictionary<string, double>());
                 var features = ClassFeatureTemp[cl];
                 foreach (var word in Vocab)
                 {
                     if (features.ContainsKey(word))
-                        ClassFeature[cl].Add(word, features[word] / totalFeatures);
+                        ObservedFeatureProb[cl].Add(word, features[word] / totalFeatures);
                     else
-                        ClassFeature[cl].Add(word, 0);//TODO: See if we have to add smoothing else this is not necessary
+                        ObservedFeatureProb[cl].Add(word, 0);//TODO: See if we have to add smoothing else this is not necessary
 
                 }
-                ClassFeature[cl]=ClassFeature[cl].OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+                ObservedFeatureProb[cl]=ObservedFeatureProb[cl].OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
             }
 
 
             using (StreamWriter Sw = new StreamWriter(OutPutFile))
             {
                 //write SysOutput
-                foreach (var clData in ClassFeature)
+                foreach (var clData in ObservedFeatureProb)
                 {
                     var featList = clData.Value;
                     Sw.WriteLine("FEATURES FOR CLASS " + clData.Key);

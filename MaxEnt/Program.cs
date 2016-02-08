@@ -82,9 +82,11 @@ namespace MaxEnt
                                 continue;
                             if (featureList.ContainsKey(key))
                                 score += featureList[key];
-                            else
-                                score += featureList["<default>"];
+                            
                         }
+                        //adding weight of default feature
+                        score += featureList["<default>"];
+                        score = System.Math.Exp(score);
                         TestClassScore.Add(predClass, score);
                         totalScore += score;
                     }

@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaxEntDecoding", "MaxEnt\MaxEntDecoding.csproj", "{650832FF-C7D1-4693-BA58-E8052B86CED2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmpiricalEstimation", "EmpiricalEstimation\EmpiricalEstimation.csproj", "{241071A6-1A2A-4B49-A0C4-921CED87EB37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cal_emp_exp", "EmpiricalEstimation\Cal_emp_exp.csproj", "{241071A6-1A2A-4B49-A0C4-921CED87EB37}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaxEntFullImplementation", "MaxEntFullImplementation\MaxEntFullImplementation.csproj", "{12B18B5F-E77B-450C-BCF4-2981B5C889FC}"
 EndProject

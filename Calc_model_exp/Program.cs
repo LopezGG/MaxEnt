@@ -21,20 +21,64 @@ namespace Calc_model_exp
             string ModelFile="";
             if(ModelFilePresent)
                 ModelFile =args[2];
-            List<String> TrainingClassList = new List<string>();
+            Dictionary<string, Dictionary<string, double>> TrainingDict = new Dictionary<string, Dictionary<string, double>>();
             List<String> Vocab = new List<string>();
+            List<String> ClassList = new List<string>();
+            string line,key,classlabel;
+            int index;
+            double value;
             using (StreamReader Sr = new StreamReader(trainingFile))
             {
 
-                //all I need is to get vocab ,
+                //all I need is to get vocab , list of classes
+                while ((line = Sr.ReadLine()) != null)
+                {
+                    if (String.IsNullOrEmpty(line))
+                        continue;
+                    string[] words = line.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                    classlabel = words[0];
+                    ClassList.Add(classlabel);
+                    for (int i = 1; i < words.Length; i++)
+                    {
+                        index = words[i].IndexOf(":");
+                        key = words[i].Substring(0,index);
+                        Vocab.Add(key);
+                        value = Convert.ToDouble(words[i].Substring(index+1));
+                        if (TrainingDict.ContainsKey(classlabel) && TrainingDict[classlabel].ContainsKey(key))
+                            TrainingDict[classlabel][key] += value;
+                        else if (TrainingDict.ContainsKey(classlabel))
+                            TrainingDict[classlabel].Add(key, value);
+                        else
+                        {
+                            Dictionary<string, double> temp = new Dictionary<string, double>();
+                            temp.Add(key, value);
+                            TrainingDict.Add(classlabel, temp);
+                        }
+                    }
+                    
+                }
+                ClassList = ClassList.Distinct().ToList();
+                Vocab = Vocab.Distinct().ToList();
             }
 
             if (ModelFilePresent )
             {
                 Dictionary<String, Dictionary<String, double>> ModelFeatureClassProb = new Dictionary<string, Dictionary<String, double>>();
-                List<String> ClassList = new List<string>();
-                ReadModelFile(ModelFile, ref  ModelFeatureClassProb, ref  ClassList);
+                List<String> ClassListModel = new List<string>();
+                ReadModelFile(ModelFile, ref  ModelFeatureClassProb, ref  ClassListModel);
                 //I have model expectations. Now i have to multiply it with number of training instances per class to get count
+                using (StreamWriter Sw = new StreamWriter(OutPutFile))
+                {
+                    foreach (var cl in ClassList)
+                    {
+                        int ClassCount = TrainingDict[cl].Count;
+                        foreach (var word in Vocab)
+                        {
+                            Sw.WriteLine()
+                        }
+                    }
+                }
+                
                 
             }
             else

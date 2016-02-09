@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmpiricalEstimation", "Empi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaxEntFullImplementation", "MaxEntFullImplementation\MaxEntFullImplementation.csproj", "{12B18B5F-E77B-450C-BCF4-2981B5C889FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calc_model_exp", "Calc_model_exp\Calc_model_exp.csproj", "{55EC7A16-1BA3-4401-B22F-B0FD6E74B958}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{12B18B5F-E77B-450C-BCF4-2981B5C889FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12B18B5F-E77B-450C-BCF4-2981B5C889FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12B18B5F-E77B-450C-BCF4-2981B5C889FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55EC7A16-1BA3-4401-B22F-B0FD6E74B958}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55EC7A16-1BA3-4401-B22F-B0FD6E74B958}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55EC7A16-1BA3-4401-B22F-B0FD6E74B958}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55EC7A16-1BA3-4401-B22F-B0FD6E74B958}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

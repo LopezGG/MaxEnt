@@ -21,7 +21,7 @@ namespace EmpiricalEstimation
             Dictionary<String, Dictionary<string, double>> ObservedFeatureProb = new Dictionary<string, Dictionary<string, double>>();
             List<String> ClassList = new List<string>();
             string classLabel,key;
-            int index,totalFeatures;
+            int index,totalFeatures, docCount=0;
             double value;
             // this will give us basic counts for each feature in a class. we will have to convert it into prob
             using(StreamReader Sr = new StreamReader(TrainingFile))
@@ -33,6 +33,7 @@ namespace EmpiricalEstimation
                     string[] words = line.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
                     classLabel = words[0];
                     ClassList.Add(classLabel);
+                    docCount++;
                     for (int i = 1; i < words.Length; i++)
                     {
                         index = words[i].IndexOf(":");
@@ -65,25 +66,25 @@ namespace EmpiricalEstimation
                 foreach (var word in Vocab)
                 {
                     if (features.ContainsKey(word))
-                        ObservedFeatureProb[cl].Add(word, features[word] / totalFeatures);
+                        ObservedFeatureProb[cl].Add(word, features[word]);
                     else
                         ObservedFeatureProb[cl].Add(word, 0);//TODO: See if we have to add smoothing else this is not necessary
 
                 }
-                ObservedFeatureProb[cl]=ObservedFeatureProb[cl].OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+                //ObservedFeatureProb[cl]=ObservedFeatureProb[cl].OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
             }
 
-
+            //Note we divide by the total Doc Count and not by total feature Count
             using (StreamWriter Sw = new StreamWriter(OutPutFile))
             {
                 //write SysOutput
                 foreach (var clData in ObservedFeatureProb)
                 {
                     var featList = clData.Value;
-                    Sw.WriteLine("FEATURES FOR CLASS " + clData.Key);
+                    //Sw.WriteLine("FEATURES FOR CLASS " + clData.Key);
                     foreach (var fl in featList)
                     {
-                        Sw.WriteLine(fl.Key + " " + fl.Value);
+                        Sw.WriteLine(clData.Key + " " + fl.Key + " " + fl.Value / docCount + " " + fl.Value);
                     }
 
                 }

@@ -57,7 +57,7 @@ namespace EmpiricalEstimation
                 }
             }
             ClassList = ClassList.Distinct().ToList();
-            Vocab = Vocab.Distinct().ToList();
+            Vocab = Vocab.OrderBy(x=>x).Distinct().ToList();
             totalFeatures = ClassList.Count * Vocab.Count;
             foreach (var cl in ClassList)
             {
@@ -73,7 +73,7 @@ namespace EmpiricalEstimation
                 }
                 //ObservedFeatureProb[cl]=ObservedFeatureProb[cl].OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
             }
-
+            
             //Note we divide by the total Doc Count and not by total feature Count
             using (StreamWriter Sw = new StreamWriter(OutPutFile))
             {
@@ -81,6 +81,7 @@ namespace EmpiricalEstimation
                 foreach (var clData in ObservedFeatureProb)
                 {
                     var featList = clData.Value;
+                    //featList = featList.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
                     //Sw.WriteLine("FEATURES FOR CLASS " + clData.Key);
                     foreach (var fl in featList)
                     {

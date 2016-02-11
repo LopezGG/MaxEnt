@@ -76,7 +76,7 @@ namespace Calc_model_exp
                     
                 }
                 ClassList = ClassList.Distinct().ToList();
-                Vocab = Vocab.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+                //Vocab = Vocab.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
             }
 
             if (ModelFilePresent )

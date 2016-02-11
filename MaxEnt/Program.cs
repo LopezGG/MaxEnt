@@ -39,9 +39,11 @@ namespace MaxEnt
                         string[] words = line.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
                         key = words[0];
                         value = Convert.ToDouble(words[1]);
-                        if (ModelFeatureClassProb.ContainsKey(classLabel) && !ModelFeatureClassProb[classLabel].ContainsKey(key))
+                        if (ModelFeatureClassProb.ContainsKey(classLabel) && ModelFeatureClassProb[classLabel].ContainsKey(key))
+                            ModelFeatureClassProb[classLabel][key] += value;
+                        else if (ModelFeatureClassProb.ContainsKey(classLabel))
                             ModelFeatureClassProb[classLabel].Add(key, value);
-                        else if (!ModelFeatureClassProb.ContainsKey(classLabel))
+                        else
                         {
                             Dictionary<String,double> temp = new Dictionary<string,double>();
                             temp.Add(key,value);
@@ -114,7 +116,7 @@ namespace MaxEnt
 
             //Write confusion Matrix to console. totalDoc is ok without -- because we counted from zero when we wrote the document.
             WriteConfusionMatrix(ClassList, ConfusionDict, "test", totalDoc);
-            Console.ReadLine();
+            //Console.ReadLine();
         }
 
         public static void WriteConfusionMatrix (List<String> ClassBreakDown, Dictionary<String, int> ConfusionDict, string testOrTrain, int totalInstances)
